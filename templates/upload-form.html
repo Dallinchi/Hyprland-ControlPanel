@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="">
+    <link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <title>Upload files</title>
+  <style>
+    #progressBar {
+      width: 0;
+      height: 20px;
+      background-color: #4caf50;
+    }
+  </style>
+</head>
+<body>
+    <div class="panel">
+        <h2><span id="usedSpace">{{ space['used'] }}</span>/{{space['space']}} Gb</h2>
+        <form id="uploadForm" class="btn-panel" action="/api/upload" method="post" enctype="multipart/form-data">
+            <span>Select File</span>
+            <div class="btn-container">
+                <label for="file-input" class="control-btn">File</label>
+                <input id="file-input" type="file" name="file" style="display: none;">
+
+                <button class="control-btn" type="submit">Upload</button>
+            </div>
+        </form>
+        <div id="progressBar"></div>
+    </div>
+</body>
+<script src="{{ url_for('static', path='/progress-bar.js') }}"></script>
+<script src="{{ url_for('static', path='/change-upload-button.js') }}"></script>
+</html> 
+

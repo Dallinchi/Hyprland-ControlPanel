@@ -1,0 +1,7 @@
+hyprctl
+amixer
+playerctl
+vlc
+sxiv
+loginctl
+dunst
