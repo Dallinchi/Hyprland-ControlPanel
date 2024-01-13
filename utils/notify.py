@@ -1,9 +1,9 @@
-from os import system
-
+import subprocess
     
 def __notify(urgency:str):
     def send(text:str):
-        system(f'notify-send -u "{urgency}" "{text}"')
+        subprocess.run(['send', '-u', urgency, text], capture_output=True, text=True)
+        
     
     return send
 

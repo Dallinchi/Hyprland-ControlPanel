@@ -1,19 +1,31 @@
-from os import system
+import subprocess
+
+from utils import notify
 
 class Playerctl:
     @staticmethod
     def play_pouse():
-        system("playerctl play-pause")
+        subprocess.run(['playerctl', 'play-pause'], capture_output=True, text=True)
+        notify.low("Плеер <|")
+        
         
     @staticmethod
     def next():
-        system("playerctl next")
+        subprocess.run(['playerctl', 'next'], capture_output=True, text=True)
+        notify.low("Плеер >>")
+        
         
 class Amixer:
     @staticmethod
     def volume_up():
-        system("amixer sset Master 2400+")
+        subprocess.run(['amixer', 'sset', 'Master', '2400+'], capture_output=True, text=True)
+        notify.low("Громкость +")
+        
         
     @staticmethod
     def volume_down():
-        system("amixer sset Master 2400-")
+        subprocess.run(['amixer', 'sset', 'Master', '2400-'], capture_output=True, text=True)
+        notify.low("Громкость -")
+        
+        
+        

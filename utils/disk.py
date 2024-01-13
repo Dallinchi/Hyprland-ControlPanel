@@ -4,7 +4,7 @@ import os
 
 from utils import hyprctl, notify
 
-# Директория сохраниния файлов
+# Директория сохранения файлов
 UPLOAD_DIRECTORY = f"./media/uploads/"
 # Доступное место в ГБ
 ALLOCATED_SPACE = 5
@@ -32,10 +32,10 @@ def _check_to_usage_space(filesize:int) -> bool:
     return False
     
     
-def save(file:UploadFile) -> bool: 
+def save(file:UploadFile) -> dict: 
     if not _check_to_usage_space(file.size):
         notify.critical(f"No place - {file.filename}")
-        return False
+        return {"statuc": "no space"}
         
     file_type = file.headers.get('content-type')
     if file_type:
@@ -54,4 +54,5 @@ def save(file:UploadFile) -> bool:
     elif file_type == 'video':
         hyprctl.Dispatch.exec(f'"[monitor HDMI-A-1] vlc -R -f --no-video-title-show {directory}"')
         
-    return True
+    return {"statuc": "saved"}
+    

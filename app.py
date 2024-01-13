@@ -1,11 +1,7 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from fastapi import UploadFile, File
 
 from pathlib import Path
-from os import system, popen
-import re
 
 
 from api import router as api_router

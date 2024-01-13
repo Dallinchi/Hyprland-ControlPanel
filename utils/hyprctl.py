@@ -1,12 +1,14 @@
-from os import popen, system
+import subprocess
 import re
+
+from utils import notify
 
 def get_ration_monitor(reverse:bool) -> str:
     '''
     Возвращает ориентацию второго монитора (HDMI-A-1)
     '''
-    output = popen('hyprctl monitors').read()
-    transform = re.search(r"Monitor HDMI-A-1.*?transform: (\d+)", output, re.DOTALL)
+    output = subprocess.run(['hyprctl', 'monitors'], capture_output=True, text=True)
+    transform = re.search(r"Monitor HDMI-A-1.*?transform: (\d+)", output.stdout.strip(), re.DOTALL)
     
     if transform:
         transform = int(transform.group(1))
@@ -22,13 +24,16 @@ def get_ration_monitor(reverse:bool) -> str:
     return ''
 
 def change_background():
-    system("change_background")
+    subprocess.run(['change_background'], capture_output=True, text=True)
+    notify.low("Смена обоев")
+
         
 class Dispatch:
     @staticmethod
     def exec(command:str):
-        system(f'hyprctl dispatch exec {command}')
+        subprocess.run(['hyprctl', 'dispatch', 'exec', command], capture_output=True, text=True)
 
     @staticmethod
     def killactive():
-        system('hyprctl dispatch killactive')
+        subprocess.run(['hyprctl', 'dispatch', 'killactive'], capture_output=True, text=True)
+        notify.low("Окно закрыто")
