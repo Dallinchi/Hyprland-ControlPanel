@@ -49,10 +49,5 @@ def save(file:UploadFile) -> dict:
         shutil.copyfileobj(file.file, buffer)
         notify.critical(f"Saved - {file.filename}")
         
-    if file_type == 'image':
-        hyprctl.Dispatch.exec(f'[monitor HDMI-A-1] sxiv -f -b --scale-mode F {directory}')
-    elif file_type == 'video':
-        hyprctl.Dispatch.exec(f'[monitor HDMI-A-1] vlc -R -f --no-video-title-show {directory}')
-    
     return {"status": "saved"}
     

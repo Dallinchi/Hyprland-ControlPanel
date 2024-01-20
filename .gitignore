@@ -13,6 +13,8 @@ develop-eggs/
 dist/
 downloads/
 media/
+presets/*/media
+!presets/example/media
 eggs/
 .eggs/
 lib/
@@ -26,6 +28,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

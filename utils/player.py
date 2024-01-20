@@ -6,9 +6,6 @@ class Playerctl:
     @staticmethod
     def play_pouse():
         subprocess.run(['playerctl', 'play-pause'], capture_output=True, text=True)
-        status = Playerctl.status()
-        notify.low(status)
-        
         
     @staticmethod
     def status():
@@ -18,7 +15,6 @@ class Playerctl:
     @staticmethod
     def next():
         subprocess.run(['playerctl', 'next'], capture_output=True, text=True)
-        notify.low("Плеер >>")
         
         
 class Amixer:

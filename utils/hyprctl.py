@@ -25,7 +25,6 @@ def get_ration_monitor(reverse:bool) -> str:
 
 def change_background():
     subprocess.run(['change_background'], capture_output=True, text=True)
-    notify.low("Смена обоев")
 
         
 class Dispatch:
@@ -36,4 +35,3 @@ class Dispatch:
     @staticmethod
     def killactive():
         subprocess.run(['hyprctl', 'dispatch', 'killactive'], capture_output=True, text=True)
-        notify.low("Окно закрыто")

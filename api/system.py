@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import APIRouter
 from fastapi import UploadFile, File
 from fastapi import HTTPException
@@ -6,7 +8,7 @@ from utils import hyprctl, player, login, disk
 from presets import get_presets
 
 router = APIRouter()
-
+logger = logging.getLogger(__name__)
 
 @router.get("/api/loginctl/poweroff")
 def _loginctl_poweroff():

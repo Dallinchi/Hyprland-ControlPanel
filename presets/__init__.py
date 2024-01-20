@@ -6,11 +6,11 @@ class BasePreset(metaclass=abc.ABCMeta):
     
     @abc.abstractmethod
     def start(self):
-        print("Work!")
+        print(f"{self.name} - Work!")
 
     @abc.abstractmethod
     def finish(self):
-        print("Exit preset")
+        print(f"{self.name} - Finished")
 
 
 def get_presets() -> list[BasePreset]:
@@ -20,6 +20,6 @@ def get_presets() -> list[BasePreset]:
     # При добавлении нового пресета, импортируй и добавь в список ниже
     return [
         work.Preset(),
-        game.Preset()
+        game.Preset(),
     ]
 
