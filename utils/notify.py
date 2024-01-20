@@ -2,9 +2,8 @@ import subprocess
     
 def __notify(urgency:str):
     def send(text:str):
-        subprocess.run(['send', '-u', urgency, text], capture_output=True, text=True)
-        
-    
+        subprocess.run(['notify-send', '-u', urgency, text], capture_output=True, text=True)
+
     return send
 
 

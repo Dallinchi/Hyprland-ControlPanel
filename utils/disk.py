@@ -35,7 +35,7 @@ def _check_to_usage_space(filesize:int) -> bool:
 def save(file:UploadFile) -> dict: 
     if not _check_to_usage_space(file.size):
         notify.critical(f"No place - {file.filename}")
-        return {"statuc": "no space"}
+        return {"status": "no space"}
         
     file_type = file.headers.get('content-type')
     if file_type:
@@ -50,9 +50,9 @@ def save(file:UploadFile) -> dict:
         notify.critical(f"Saved - {file.filename}")
         
     if file_type == 'image':
-        hyprctl.Dispatch.exec(f'"[monitor HDMI-A-1] sxiv -f -b --scale-mode F {directory}"')
+        hyprctl.Dispatch.exec(f'[monitor HDMI-A-1] sxiv -f -b --scale-mode F {directory}')
     elif file_type == 'video':
-        hyprctl.Dispatch.exec(f'"[monitor HDMI-A-1] vlc -R -f --no-video-title-show {directory}"')
-        
-    return {"statuc": "saved"}
+        hyprctl.Dispatch.exec(f'[monitor HDMI-A-1] vlc -R -f --no-video-title-show {directory}')
+    
+    return {"status": "saved"}
     
