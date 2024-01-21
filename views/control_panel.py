@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
 from fastapi import Request
+import presets
 
 from templates import templates
 from utils import disk
@@ -140,6 +141,33 @@ async def render_miscpage(request: Request):
                         " ",
                     ],
                 },
+            ],
+        },
+    )
+
+
+@router.get("/presets", response_class=HTMLResponse)
+async def render_miscpage(request: Request):
+    return templates.TemplateResponse(
+        "panel-btns.html",
+        {
+            "request": request,
+            "btns": [
+                {
+                    "title": btn.name,
+                    "action": [
+                        f"/api/presets/{btn.name}/on",
+                        f"/api/presets/{btn.name}/off",
+                    ],
+                    "btn-id": [
+                        f"btn-preset-{btn.name}-on",
+                        f"btn-preset-{btn.name}-off",
+                    ],
+                    "btn-title": [
+                        "on",
+                        "off",
+                    ],
+                } for btn in presets.get_presets()
             ],
         },
     )

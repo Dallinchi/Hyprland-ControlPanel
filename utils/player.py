@@ -6,6 +6,14 @@ class Playerctl:
     @staticmethod
     def play_pouse():
         subprocess.run(['playerctl', 'play-pause'], capture_output=True, text=True)
+    
+    @staticmethod
+    def play():
+        subprocess.run(['playerctl', 'play'], capture_output=True, text=True)
+        
+    @staticmethod
+    def pause():
+        subprocess.run(['playerctl', 'pause'], capture_output=True, text=True)
         
     @staticmethod
     def status():

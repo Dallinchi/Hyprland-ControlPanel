@@ -14,6 +14,7 @@ class BasePreset(metaclass=abc.ABCMeta):
 
 
 def get_presets() -> list[BasePreset]:
+    # from presets import example
     from presets import work
     from presets import game
     

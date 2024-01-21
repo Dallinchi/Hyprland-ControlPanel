@@ -1,5 +1,8 @@
 import subprocess
 import re
+from os import listdir, path
+from pathlib import Path
+from random import choice
 
 from utils import notify
 
@@ -23,8 +26,9 @@ def get_ration_monitor(reverse:bool) -> str:
         return "16:9"
     return ''
 
-def change_background():
-    subprocess.run(['change_background'], capture_output=True, text=True)
+def change_background(path_to_wallpapers:Path=Path('/home/dallinchi/Pictures/Wallpapers/')):
+    wallpapers = listdir(path_to_wallpapers.absolute())
+    Dispatch.exec(f'swaybg -i {path_to_wallpapers.absolute()}/{choice(wallpapers)} -m fill')
 
         
 class Dispatch:
@@ -35,3 +39,11 @@ class Dispatch:
     @staticmethod
     def killactive():
         subprocess.run(['hyprctl', 'dispatch', 'killactive'], capture_output=True, text=True)
+        
+    @staticmethod
+    def workspace(workspace:int):
+        subprocess.run(['hyprctl', 'dispatch', 'workspace', str(workspace)], capture_output=True, text=True)
+    
+    @staticmethod
+    def moveworkspacetomonitor(workspace:int, monitors:int):
+        subprocess.run(['hyprctl', 'dispatch', 'moveworkspacetomonitor', str(workspace), str(monitors)], capture_output=True, text=True)

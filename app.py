@@ -4,10 +4,8 @@ import logging
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 
-
 from api import router as api_router
 from views import router as views_router
-
 
 app = FastAPI()
 
@@ -35,7 +33,7 @@ logger = logging.getLogger(__name__)
 
 logging.basicConfig(filename='control.log', encoding='utf-8', level=logging.INFO, format=logging_formatter)
 
-# Middleware для перехвата логов роутинга
+# Middleware для логов роутинга
 @app.middleware("http")
 async def log_route(request: Request, call_next):
     path = request.url.path

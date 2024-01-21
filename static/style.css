@@ -129,51 +129,20 @@ a {
 
 /* Кастом для телефона */
 @media (max-width: 900px) {
-    /* .panel {
-        width: 0%
-    } */
     .control-btn {
         font-size: 120%;
         font-weight: 600;
-    
-    }
-    .btn-panel {
-        width: 90%;
     }
     .btn-panel span {
-        margin: 20px 5px;
-        padding: 10px;
         font-size: 120%;
         font-weight: 800;
-    
+        width: 100%;
+    }
+    .btn-panel {
+        flex-wrap: wrap;
+    }
+    .btn-container {
+        justify-content: center;
+        width: 100%;
     }
 }
-
-        .progress {
-            width: 100px;
-            height: 100px;
-            position: relative;
-            border-radius: 50%;
-            background-color: #f3f3f3;
-        }
-
-        .progress::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background-color: #3498db;
-            clip-path: polygon(50% 0%, 100% 0, 100% 100%, 50% 100%, 50% calc(100% - var(--progress)));
-        }
-
-        .progress::before {
-            content: attr(data-progress) '%';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 20px;
-        }
