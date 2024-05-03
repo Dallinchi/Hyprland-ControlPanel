@@ -1,0 +1,15 @@
+<div class="panel">
+    <h2>
+        <pre id="panel-title">{{title}}</pre>
+    </h2>
+    {% for btn in btns %}
+    <div class="btn-panel">
+        <span>{{btn['title']}}</span>
+        <div class="btn-container">
+            {% for i in btn['btns'] %}
+            <button class="control-btn" id="{{i['btn-id']}}">{{i['btn-title']}}</button>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>

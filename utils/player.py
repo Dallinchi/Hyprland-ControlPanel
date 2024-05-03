@@ -24,12 +24,20 @@ class Playerctl:
     def next():
         subprocess.run(['playerctl', 'next'], capture_output=True, text=True)
         
+    @staticmethod
+    def previous():
+        subprocess.run(['playerctl', 'previous'], capture_output=True, text=True)
+    
+    @staticmethod
+    def title():
+        output = subprocess.run(['playerctl', 'metadata', 'title'], capture_output=True, text=True)
+        return output.stdout
+
         
 class Amixer:
     @staticmethod
     def volume_up():
         subprocess.run(['amixer', 'sset', 'Master', '2400+'], capture_output=True, text=True)
-        notify.low(f"{Amixer.get_volume()} +")
         
     @staticmethod
     def get_volume():
@@ -42,7 +50,6 @@ class Amixer:
     @staticmethod
     def volume_down():
         subprocess.run(['amixer', 'sset', 'Master', '2400-'], capture_output=True, text=True)
-        notify.low(f"{Amixer.get_volume()} -")
         
         
         

@@ -4,7 +4,7 @@ from fastapi import Request
 import presets
 
 from templates import templates
-from utils import disk
+from utils import disk, player
 
 router = APIRouter()
 
@@ -15,6 +15,7 @@ async def render_homepage(request: Request):
         "index.html",
         {
             "request": request,
+            "title": "Control panel",
             "btns": [
                 {"title": "Player", "action": "/player/"},
                 {"title": "Loginctl", "action": "/loginctl/"},
@@ -27,11 +28,12 @@ async def render_homepage(request: Request):
 
 
 @router.get("/loginctl", response_class=HTMLResponse)
-async def render_powerpage(request: Request):
+async def render_session(request: Request):
     return templates.TemplateResponse(
-        "panel-btns.html",
+        "session-manager.html",
         {
             "request": request,
+            "title": "Session manager",
             "btns": [
                 {
                     "title": "Power OFF",
@@ -43,7 +45,7 @@ async def render_powerpage(request: Request):
                     ],
                     "btn-title": [
                         "",
-                    ]
+                    ],
                 },
                 {
                     "title": "Reboot",
@@ -63,47 +65,52 @@ async def render_powerpage(request: Request):
 
 
 @router.get("/player", response_class=HTMLResponse)
-async def render_playerpage(request: Request):
+async def render_player(request: Request):
     return templates.TemplateResponse(
-        "panel-btns.html",
+        "player.html",
         {
             "request": request,
+            "title": f"Player control \n {player.Playerctl.title()}",
             "btns": [
                 {
-                    "title": "Play | Pouse",
-                    "action": [
-                        "/api/player/play-pouse",
-                    ],
-                    "btn-id": [
-                        "btn-player-play-pouse",
-                    ],
-                    "btn-title": [
-                        "",
+                    "title": "Play | Pause",
+                    "btns": [
+                        {
+                            "action": "/api/player/play-pouse",
+                            "btn-id": "btn-player-play-pouse",
+                            "btn-title": "",
+                        },
                     ],
                 },
                 {
-                    "title": "Next",
-                    "action": [
-                        "/api/player/next",
-                    ],
-                    "btn-id": [
-                        "btn-player-next",
-                    ],
-                    "btn-title": [
-                        "",
+                    "title": "Prev | Next",
+                    "btns": [
+                        {
+                            "action": "/api/player/previous",
+                            "btn-id": "btn-player-previous",
+                            "btn-title": "<-",
+                        },
+                        {
+                            "action": "/api/player/next",
+                            "btn-id":  "btn-player-next",
+                            "btn-title": "->",
+                        },
                     ],
                 },
                 {
                     "title": "Volume",
-                    "action": [
-                        "/api/player/volume/up",
-                        "/api/player/volume/down",
+                    "btns": [
+                        {
+                            "action": "/api/player/volume/up",
+                            "btn-id":  "btn-player-volume-up",
+                            "btn-title": "+",
+                        },
+                        {
+                            "action": "/api/player/volume/down",
+                            "btn-id": "btn-player-volume-down",
+                            "btn-title": "-",
+                        },
                     ],
-                    "btn-id": [
-                        "btn-player-volume-up",
-                        "btn-player-volume-down",
-                    ],
-                    "btn-title": ["+", "-"],
                 },
             ],
         },
@@ -111,34 +118,31 @@ async def render_playerpage(request: Request):
 
 
 @router.get("/misc", response_class=HTMLResponse)
-async def render_miscpage(request: Request):
+async def render_misc(request: Request):
     return templates.TemplateResponse(
-        "panel-btns.html",
+        "misc.html",
         {
             "request": request,
+            "title": "Misc",
             "btns": [
                 {
                     "title": "Change background",
-                    "action": [
-                        "/api/change-background",
-                    ],
-                    "btn-id": [
-                        "btn-change-background",
-                    ],
-                    "btn-title": [
-                        " ",
+                    "btns": [
+                        {
+                            "action": "/api/change-background",
+                            "btn-id":  "btn-change-background",
+                            "btn-title": "",
+                        },
                     ],
                 },
                 {
                     "title": "Kill Active Window",
-                    "action": [
-                        "/api/hyprctl/kill-active-window",
-                    ],
-                    "btn-id": [
-                        "btn-kill-active-window",
-                    ],
-                    "btn-title": [
-                        " ",
+                    "btns": [
+                        {
+                            "action": "/api/hyprctl/kill-active-window",
+                            "btn-id":  "btn-kill-active-window",
+                            "btn-title": " ",
+                        },
                     ],
                 },
             ],
@@ -147,34 +151,35 @@ async def render_miscpage(request: Request):
 
 
 @router.get("/presets", response_class=HTMLResponse)
-async def render_miscpage(request: Request):
+async def render_preset(request: Request):
     return templates.TemplateResponse(
-        "panel-btns.html",
+        "presets.html",
         {
             "request": request,
             "btns": [
                 {
                     "title": btn.name,
-                    "action": [
-                        f"/api/presets/{btn.name}/on",
-                        f"/api/presets/{btn.name}/off",
+                    "btns": [
+                        {
+                            "action": "/api/presets/{btn.name}/on",
+                            "btn-id":  "btn-preset-{btn.name}-on",
+                            "btn-title": "on",
+                        },
+                        {
+                            "action": "/api/presets/{btn.name}/off",
+                            "btn-id":  "btn-preset-{btn.name}-off",
+                            "btn-title": "off",
+                        },
                     ],
-                    "btn-id": [
-                        f"btn-preset-{btn.name}-on",
-                        f"btn-preset-{btn.name}-off",
-                    ],
-                    "btn-title": [
-                        "on",
-                        "off",
-                    ],
-                } for btn in presets.get_presets()
+                }
+                for btn in presets.get_presets()
             ],
         },
     )
 
 
 @router.get("/upload", response_class=HTMLResponse)
-async def render_filepage(request: Request):
+async def render_sharefiles(request: Request):
     return templates.TemplateResponse(
         "upload-form.html",
         {
@@ -182,6 +187,6 @@ async def render_filepage(request: Request):
             "space": {
                 "used": f"{disk.get_folder_size():.2f}",
                 "space": disk.ALLOCATED_SPACE,
-            } 
+            },
         },
     )

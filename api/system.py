@@ -46,6 +46,15 @@ def _playerctl_next():
     player.Playerctl.next()
     return "successful"
 
+@router.get("/api/player/previous")
+def _playerctl_previous():
+    player.Playerctl.previous()
+    return "successful"
+
+@router.get("/api/player/title")
+def _playerctl_title():
+    title = player.Playerctl.title()
+    return title
 
 @router.get("/api/change-background")
 def _swaybg_change_background():

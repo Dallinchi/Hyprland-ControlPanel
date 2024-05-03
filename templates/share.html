@@ -16,7 +16,9 @@
   </style>
 </head>
 <body>
-    <div class="panel">
+  <h2>{{title}}</h2>
+  <div class="panel">
+    <h2><pre>{{title}}</pre></h2>
         <h2><span id="usedSpace">{{ space['used'] }}</span>/{{space['space']}} Gb</h2>
         <form id="uploadForm" class="btn-panel" action="/api/upload" method="post" enctype="multipart/form-data">
             <span>Select File</span>

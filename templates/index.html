@@ -9,6 +9,7 @@
     <title>Control Panel</title>
 <body>
     <div class="panel">
+        <h2><pre>{{title}}</pre></h2>
         {% for btn in btns %}
         <form action="{{btn['action']}}"><button class="control-btn">{{btn['title']}}</button></form>
         {% endfor %}
