@@ -4,57 +4,12 @@ from fastapi import APIRouter
 from fastapi import UploadFile, File
 from fastapi import HTTPException
 
-from utils import hyprctl, player, login, disk
+from utils import hyprctl, disk
 from presets import get_presets
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
 
-
-@router.get("/api/loginctl/poweroff")
-def _loginctl_poweroff():
-    login.Loginctl.poweroff()
-    return "successful"
-
-
-@router.get("/api/loginctl/reboot")
-def _loginctl_reboot():
-    login.Loginctl.reboot()
-    return "successful"
-
-
-@router.get("/api/player/volume/up")
-def _amixer_volume_up():
-    player.Amixer.volume_up()
-    return "successful"
-
-
-@router.get("/api/player/volume/down")
-def _amixer_volume_down():
-    player.Amixer.volume_down()
-    return "successful"
-
-
-@router.get("/api/player/play-pouse")
-def _playerctl_play_pause():
-    player.Playerctl.play_pouse()
-    return "successful"
-
-
-@router.get("/api/player/next")
-def _playerctl_next():
-    player.Playerctl.next()
-    return "successful"
-
-@router.get("/api/player/previous")
-def _playerctl_previous():
-    player.Playerctl.previous()
-    return "successful"
-
-@router.get("/api/player/title")
-def _playerctl_title():
-    title = player.Playerctl.title()
-    return title
 
 @router.get("/api/change-background")
 def _swaybg_change_background():
@@ -84,6 +39,7 @@ def _presets(name: str, toggle: str):
                     preset.finish()
 
     return "succesfull"
+
 
 @router.post("/api/upload")
 def _upload_file(file: UploadFile = File(...)):

@@ -36,27 +36,23 @@ async def render_session(request: Request):
             "title": "Session manager",
             "btns": [
                 {
-                    "title": "Power OFF",
-                    "action": [
-                        "/api/loginctl/poweroff",
+                    "title": "Power Off",
+                    "btns": [
+                        {
+                            "action": "/api/loginctl/poweroff",
+                            "btn-id": "btn-system-poweroff",
+                            "btn-title": "",
+                        },
                     ],
-                    "btn-id": [
-                        "btn-system-poweroff",
-                    ],
-                    "btn-title": [
-                        "",
-                    ],
-                },
+                }, 
                 {
                     "title": "Reboot",
-                    "action": [
-                        "/api/loginctl/reboot",
-                    ],
-                    "btn-id": [
-                        "btn-system-reboot",
-                    ],
-                    "btn-title": [
-                        "",
+                    "btns": [
+                        {
+                            "action": "/api/loginctl/reboot",
+                            "btn-id": "btn-system-reboot",
+                            "btn-title": "",
+                        },
                     ],
                 },
             ],
@@ -70,10 +66,9 @@ async def render_player(request: Request):
         "player.html",
         {
             "request": request,
-            "title": f"Player control \n {player.Playerctl.title()}",
+            "title": f"Player control",
             "btns": [
                 {
-                    "title": "Play | Pause",
                     "btns": [
                         {
                             "action": "/api/player/play-pouse",
@@ -83,7 +78,6 @@ async def render_player(request: Request):
                     ],
                 },
                 {
-                    "title": "Prev | Next",
                     "btns": [
                         {
                             "action": "/api/player/previous",
@@ -98,7 +92,6 @@ async def render_player(request: Request):
                     ],
                 },
                 {
-                    "title": "Volume",
                     "btns": [
                         {
                             "action": "/api/player/volume/up",

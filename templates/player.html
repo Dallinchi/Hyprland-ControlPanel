@@ -4,10 +4,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="{{ url_for('static', path='/style.css') }}" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Press+Start+2P&display=swap"
-        rel="stylesheet">
+        <link rel="stylesheet" href="https://www.nerdfonts.com/assets/css/webfont.css">
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Press+Start+2P&display=swap" rel="stylesheet">
         <title>Control Panel</title>
-        
         <body>
 
             {% include 'panel-btns-template.html' %}
@@ -29,6 +28,21 @@
                             document.getElementById("panel-title").textContent = title
                         })
                         .catch(error => console.error('Error:', error));
+                    fetch('http://192.168.1.4:5566/api/player/status')
+                        .then(response => response.text())
+                        .then(data => {
+                            data = data.replace(/"/g, '').replace(/\\n/g, '');
+
+                            btn = document.getElementById('btn-player-play-pouse')
+                            if (data == "Playing"){
+                                btn.innerHTML = "<i class='nf nf-fa-pause'></i>";
+                            }else{
+                                 btn.innerHTML = "<i class='nf nf-fa-play'></i>";
+                            }
+                            
+                        })
+                        .catch(error => console.error('Error:', error));
+                    
                 })
                 .catch(error => console.error('Error:', error));
             
@@ -37,6 +51,30 @@
     </script>
     {% endfor %}
     {% endfor %}
+    <script>
+        fetch('http://192.168.1.4:5566/api/player/title')
+        .then(response => response.text())
+        .then(data => {
+            data = data.replace(/"/g, '').replace(/\\n/g, '');
+            title = "Player control \n " + data
+            document.getElementById("panel-title").textContent = title
+        })
+        .catch(error => console.error('Error:', error));
+    fetch('http://192.168.1.4:5566/api/player/status')
+        .then(response => response.text())
+        .then(data => {
+            data = data.replace(/"/g, '').replace(/\\n/g, '');
+
+            btn = document.getElementById('btn-player-play-pouse')
+            if (data == "Playing"){
+                btn.innerHTML = "<i class='nf nf-fa-pause'></i>";
+            }else{
+                 btn.innerHTML = "<i class='nf nf-fa-play'></i>";
+            }
+            
+        })
+        .catch(error => console.error('Error:', error));
+    </script>
 </body>
 
 </html>

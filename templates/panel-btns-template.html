@@ -4,7 +4,9 @@
     </h2>
     {% for btn in btns %}
     <div class="btn-panel">
-        <span>{{btn['title']}}</span>
+        {% if btn['title'] %}
+            <span>{{btn['title']}}</span>
+        {% endif %}
         <div class="btn-container">
             {% for i in btn['btns'] %}
             <button class="control-btn" id="{{i['btn-id']}}">{{i['btn-title']}}</button>
