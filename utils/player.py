@@ -1,37 +1,89 @@
 import subprocess
 
-from utils import notify
-
 class Playerctl:
     @staticmethod
-    def play_pouse():
-        subprocess.run(['playerctl', 'play-pause'], capture_output=True, text=True)
+    def play_pause(player:str | None = None):
+        command = f"playerctl -p {player} play-pause"
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        output, error = process.communicate()
+        
+        return output[:-1]
     
     @staticmethod
-    def play():
-        subprocess.run(['playerctl', 'play'], capture_output=True, text=True)
+    def play(player:str | None = None):
+        command = f"playerctl -p {player} play"
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        output, error = process.communicate()
         
-    @staticmethod
-    def pause():
-        subprocess.run(['playerctl', 'pause'], capture_output=True, text=True)
-        
-    @staticmethod
-    def status():
-        status = subprocess.run(['playerctl', 'status'], capture_output=True, text=True)
-        return status.stdout.strip()        
-        
-    @staticmethod
-    def next():
-        subprocess.run(['playerctl', 'next'], capture_output=True, text=True)
-        
-    @staticmethod
-    def previous():
-        subprocess.run(['playerctl', 'previous'], capture_output=True, text=True)
+        return output[:-1]
     
     @staticmethod
-    def title():
-        output = subprocess.run(['playerctl', 'metadata', 'title'], capture_output=True, text=True)
-        return output.stdout
+    def pause(player:str | None = None):
+        command = f"playerctl -p {player} pause"
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        output, error = process.communicate()
+        
+        return output[:-1]
+    
+    @staticmethod
+    def status(player:str | None = None):
+        command = f"playerctl -p {player} status"
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        output, error = process.communicate()
+        
+        return output[:-1]
+        
+    @staticmethod
+    def next(player:str | None = None):
+        command = f"playerctl -p {player} next"
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        output, error = process.communicate()
+        
+        return output[:-1]
+    
+    @staticmethod
+    def previous(player:str | None = None):
+        command = f"playerctl -p {player} previous"
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        output, error = process.communicate()
+        
+        return output[:-1]
+    
+    @staticmethod
+    def title(player:str | None = None):
+        command = f"playerctl -p {player} metadata title"
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        output, error = process.communicate()
+        
+        return output[:-1]
+    
+    @staticmethod
+    def set_volume(player:str | None = None, value:float = 0):
+        status = '+' if value > 0 else '-'
+        
+        command = f"playerctl -p {player} volume {abs(value)}{status}"
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        output, error = process.communicate()
+        
+        return output[:-1]
+        
+    @staticmethod
+    def get_volume(player:str | None = None):
+        command = f"playerctl -p {player} volume"
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        output, error = process.communicate()
+        
+        return output[:-1]
+    
+    @staticmethod
+    def players():
+        command = f"playerctl -l"
+        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        output, error = process.communicate()
+        
+        # Вывод этой команды показывает лишнее, отсекаем всё после точки
+        return [player.split('.')[0] for player in output[:-1].split()]
+    
 
         
 class Amixer:
@@ -52,4 +104,5 @@ class Amixer:
         subprocess.run(['amixer', 'sset', 'Master', '2400-'], capture_output=True, text=True)
         
         
-        
+
+print(Playerctl.status('spotify'))
