@@ -67,45 +67,6 @@ async def render_player(request: Request):
         {
             "request": request,
             "title": f"Player control",
-            "btns": [
-                {
-                    "btns": [
-                        {
-                            "action": "/api/player/play-pouse",
-                            "btn-id": "btn-player-play-pouse",
-                            "btn-title": "",
-                        },
-                    ],
-                },
-                {
-                    "btns": [
-                        {
-                            "action": "/api/player/previous",
-                            "btn-id": "btn-player-previous",
-                            "btn-title": "<-",
-                        },
-                        {
-                            "action": "/api/player/next",
-                            "btn-id":  "btn-player-next",
-                            "btn-title": "->",
-                        },
-                    ],
-                },
-                {
-                    "btns": [
-                        {
-                            "action": "/api/player/volume/up",
-                            "btn-id":  "btn-player-volume-up",
-                            "btn-title": "+",
-                        },
-                        {
-                            "action": "/api/player/volume/down",
-                            "btn-id": "btn-player-volume-down",
-                            "btn-title": "-",
-                        },
-                    ],
-                },
-            ],
         },
     )
 

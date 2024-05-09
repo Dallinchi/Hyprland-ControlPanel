@@ -1,15 +1,14 @@
-const parentElement = document.getElementById('main-panel');
 
 function send(url) {
     fetch('http://192.168.1.4:5566' + url, {
         method: 'GET'
     })
         .then(response => response.json())
-        .then(data => { })
+        .then(data => {})
         .catch(error => console.error('Error:', error));
-}
-function title(player) {
-    return fetch('http://192.168.1.4:5566/api/player/' + player + '/title', {
+    }
+    function updateTitle(player) {
+        return fetch('http://192.168.1.4:5566/api/player/' + player + '/title', {
         method: 'GET'
     })
         .then(response => response.json())
@@ -17,17 +16,61 @@ function title(player) {
             return data;
         })
         .catch(error => console.error('Error:', error));
-}
-function update_status(player) {
-    return fetch('http://192.168.1.4:5566/api/player/' + player + '/status', {
-        method: 'GET'
-    })
+    }
+    function updateStatus(player) {
+        return fetch('http://192.168.1.4:5566/api/player/' + player + '/status', {
+            method: 'GET'
+        })
         .then(response => response.text())
         .then(data => {
             return data;
         })
         .catch(error => console.error('Error:', error));
-}
+    }
+    
+const parentElement = document.getElementById('main-panel');
+
+// Управление через Amixer
+const panelElement = document.createElement('div');
+panelElement.className = 'panel';
+
+
+const btnPanelElement = document.createElement('div');
+btnPanelElement.className = 'btn-panel';
+const spanElement = document.createElement('span');
+spanElement.textContent = 'Amixer';
+btnPanelElement.appendChild(spanElement);
+
+
+// Кнопки громкости плеера
+const btnContainerVolume = document.createElement('div');
+btnContainerVolume.className = 'btn-container';
+
+const buttonVolumeDown = document.createElement('button');
+buttonVolumeDown.className = 'control-btn';
+buttonVolumeDown.id = 'btn-' + 'amixer' + '-volume-down';
+buttonVolumeDown.textContent = '-';
+buttonVolumeDown.addEventListener("click", function() {
+    send('/api/player/volume/down');
+  });
+
+const buttonVolumeUp = document.createElement('button');
+buttonVolumeUp.className = 'control-btn';
+buttonVolumeUp.id = 'btn-' + 'amixer' + '-volume-up';
+buttonVolumeUp.textContent = '+';
+buttonVolumeUp.addEventListener("click", function() {
+    send('/api/player/volume/up');
+  });
+
+btnContainerVolume.appendChild(buttonVolumeDown)
+btnContainerVolume.appendChild(buttonVolumeUp)
+btnPanelElement.appendChild(btnContainerVolume);
+
+
+// Прочее
+panelElement.appendChild(btnPanelElement);
+parentElement.appendChild(panelElement);
+
 
 fetch('http://192.168.1.4:5566/api/player/players')
     .then(response => response.json())
@@ -43,7 +86,7 @@ fetch('http://192.168.1.4:5566/api/player/players')
             const spanElement = document.createElement('span');
             // Почему такое чувство, что я делаю что-то плохое?
             // Впрочем какая разница, если это работает ^-^
-            title(item)
+            updateTitle(item)
                 .then(title => {
                     spanElement.textContent = item + " - " + title;
                 });
@@ -59,7 +102,7 @@ fetch('http://192.168.1.4:5566/api/player/players')
             buttonPlayPause.textContent = 'play | pause';
             buttonPlayPause.addEventListener("click", function() {
                 send('/api/player/'+item+'/play-pause');
-                update_status(item)
+                updateStatus(item)
                 .then(status => {
                     status = status.replace(/"/g, '').replace(/\\n/g, '');
                     console.log(status)
@@ -71,7 +114,7 @@ fetch('http://192.168.1.4:5566/api/player/players')
                     }
                 });
               });
-            update_status(item)
+              updateStatus(item)
             .then(status => {
                 status = status.replace(/"/g, '').replace(/\\n/g, '');
                 console.log(status)
@@ -97,6 +140,10 @@ fetch('http://192.168.1.4:5566/api/player/players')
             buttonPrev.textContent = '<-';
             buttonPrev.addEventListener("click", function() {
                 send('/api/player/'+item+'/previous');
+                updateTitle(item)
+                .then(title => {
+                    spanElement.textContent = item + " - " + title;
+                });
               });
 
 
@@ -106,6 +153,10 @@ fetch('http://192.168.1.4:5566/api/player/players')
             buttonNext.textContent = '->';
             buttonNext.addEventListener("click", function() {
                 send('/api/player/'+item+'/next');
+                updateTitle(item)
+                .then(title => {
+                    spanElement.textContent = item + " - " + title;
+                });
               });
 
             btnContainerPrevNext.appendChild(buttonPrev)

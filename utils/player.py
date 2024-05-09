@@ -51,7 +51,9 @@ class Playerctl:
     
     @staticmethod
     def title(player:str | None = None):
-        command = f"playerctl -p {player} metadata title"
+        # Ты видишь кастыль? А он есть.
+        # Ставим задержку, иначе в комбинации next/prev он показывает прошлый title
+        command = f"sleep 0.1 && playerctl -p {player} metadata title"
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         output, error = process.communicate()
         
@@ -103,6 +105,3 @@ class Amixer:
     def volume_down():
         subprocess.run(['amixer', 'sset', 'Master', '2400-'], capture_output=True, text=True)
         
-        
-
-print(Playerctl.status('spotify'))
