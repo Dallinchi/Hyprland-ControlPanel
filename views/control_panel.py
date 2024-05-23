@@ -115,13 +115,13 @@ async def render_preset(request: Request):
                     "title": btn.name,
                     "btns": [
                         {
-                            "action": "/api/presets/{btn.name}/on",
-                            "btn-id":  "btn-preset-{btn.name}-on",
+                            "action": f"/api/presets/{btn.name}/on",
+                            "btn-id":  f"btn-preset-{btn.name}-on",
                             "btn-title": "on",
                         },
                         {
-                            "action": "/api/presets/{btn.name}/off",
-                            "btn-id":  "btn-preset-{btn.name}-off",
+                            "action": f"/api/presets/{btn.name}/off",
+                            "btn-id":  f"btn-preset-{btn.name}-off",
                             "btn-title": "off",
                         },
                     ],
